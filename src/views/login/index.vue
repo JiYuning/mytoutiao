@@ -48,8 +48,8 @@ export default {
           } else {
             callback(new Error('请勾选我们的霸王条约'))
           }
-        } }
-        ]
+        }
+        }]
       }
     }
   },
@@ -57,7 +57,13 @@ export default {
     submitLogin () {
       this.$refs.myForm.validate(function (ok) {
         if (ok) {
-          alert('登陆成功')
+          this.$axios({
+            url: '/authorizations',
+            method: 'post',
+            data: this.loginFrom
+          }).then(res => {
+            window.localStorage.setItem('user-token', res.data.data.token)
+          }).catch(() => {})
         }
       })
     }
