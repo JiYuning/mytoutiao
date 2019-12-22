@@ -64,8 +64,12 @@ export default {
           }).then(res => {
             window.localStorage.setItem('user-token', res.data.data.token)
             this.$router.push('/home')
-          }).catch(err => {
-            console.log(err)
+          }).catch(() => {
+            this.$message({
+              showClose: true,
+              message: '警告哦，你输入的手机号或者验证码不正确!!!',
+              type: 'warning'
+            })
           })
         }
       })
