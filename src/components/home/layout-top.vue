@@ -8,14 +8,14 @@
       <el-row type="flex" justify="end" align="middle">
         <img src="../../assets/img/avatar.jpg" alt />
         <el-dropdown>
-          <span class="el-dropdown-link" style="font-size:18px">
+          <span class="el-dropdown-link">
             九千万少女的梦!
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
+            <el-dropdown-item>个人信息</el-dropdown-item>
+            <el-dropdown-item>git 地址</el-dropdown-item>
+            <el-dropdown-item>退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-row>
