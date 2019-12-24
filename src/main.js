@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import './perimission'
 import router from './router'
 import ElenmenrUI from 'element-ui'// 引入模块
 import Component from './components'
