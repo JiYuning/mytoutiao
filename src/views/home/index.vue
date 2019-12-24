@@ -11,7 +11,9 @@
         <el-header>
           <layout-top></layout-top>
         </el-header>
-        <el-main>主体区域</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
