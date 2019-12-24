@@ -7,15 +7,15 @@
     <el-col class="right" :span="12">
       <el-row type="flex" justify="end" align="middle">
         <img :src="userINfo.photo ? userINfo.photo : defaultImg" alt="">
-        <el-dropdown>
+        <el-dropdown @command="clickMenu">
           <span class="el-dropdown-link">
             {{userINfo.name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人信息</el-dropdown-item>
-            <el-dropdown-item>git 地址</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-item command="info">个人信息</el-dropdown-item>
+            <el-dropdown-item command="git">git 地址</el-dropdown-item>
+            <el-dropdown-item command="logout">退出</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-row>
@@ -41,6 +41,18 @@ export default {
     }).then(res => {
       this.userINfo = res.data.data
     })
+  },
+  methods: {
+    clickMenu (command) {
+      if (command === 'info') {
+
+      } else if (command === 'git') {
+        window.location.href = 'https://github.com/JiYuning/mytoutiao'
+      } else if (command === 'logout') {
+        window.localStorage.removeItem('user-token')
+        this.$router.push('/login')
+      }
+    }
   }
 }
 </script>
