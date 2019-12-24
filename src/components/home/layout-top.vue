@@ -6,10 +6,10 @@
     </el-col>
     <el-col class="right" :span="12">
       <el-row type="flex" justify="end" align="middle">
-        <img src="../../assets/img/avatar.jpg" alt />
+        <img :src="userINfo.photo ? userINfo.photo : defaultImg" alt="">
         <el-dropdown>
           <span class="el-dropdown-link">
-            九千万少女的梦!
+            {{userINfo.name}}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -24,7 +24,25 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      userINfo: {},
+      defaultImg: require('../../assets/img/4.jpg')
+    }
+  },
+  created () {
+    let token = localStorage.getItem('user-token')
+    this.$axios({
+      url: '/user/profile',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(res => {
+      this.userINfo = res.data.data
+    })
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -35,6 +53,8 @@ export default {}
   }
   .right {
     img {
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       margin-right: 10px;
     }
