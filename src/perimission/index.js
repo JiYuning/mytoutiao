@@ -1,5 +1,5 @@
 
-import router from '../router'
+import router from '../router/index'
 
 router.beforeEach(function (to, from, next) {
   if (to.path.startsWith('/home')) {
