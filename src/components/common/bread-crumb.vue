@@ -1,9 +1,9 @@
 <template>
     <el-breadcrumb>
         <el-breadcrumb-item to="/home">首页</el-breadcrumb-item>
-        <el-breadcrumb-itemb>
+        <el-breadcrumb-item>
             <slot name='title'></slot>
-        </el-breadcrumb-itemb>
+        </el-breadcrumb-item>
     </el-breadcrumb>
 
 </template>
