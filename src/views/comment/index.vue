@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card v-loading="loading">
     <bread-crumb slot="header">
       <template slot="title">评论管理</template>
     </bread-crumb>
@@ -38,6 +38,7 @@ export default {
   data () {
     return {
       list: [],
+      loading: false, // 默认不打开进度条
       page: {// 专门存放分页信息数据
         total: 0,
         pageSize: 10, // 默认没也条数为10
@@ -52,12 +53,15 @@ export default {
       this.getComment()
     },
     getComment () {
+      this.loading = true// 打开进度条
       this.$axios({
         url: '/articles',
         params: { response_type: 'comment', page: this.page.currentPage, per_page: this.page.pageSize }
       }).then(result => {
         this.list = result.data.results
         this.page.total = result.data.total_count
+        this.loading = false// 关闭进度条
+        // setTimeout(() => { this.loading = false }, 3000)// 设置关闭进度条时间
       })
     },
     // 定义一个格式化的函数
