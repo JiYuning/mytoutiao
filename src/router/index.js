@@ -20,6 +20,9 @@ const routes = [
     }, {
       path: '/home/comment',
       component: () => import('../views/comment')
+    }, {
+      path: 'material',
+      component: () => import('../views/material')
     }]
   }, {
     path: '/login',
