@@ -1,3 +1,6 @@
+
+//  素材列表
+
 <template>
   <el-card>
     <!-- 头部内容 -->
@@ -12,7 +15,7 @@
               <img :src="item.url" alt />
             </div>
             <el-row class="operate" align="middle" type="flex" justify="space-around">
-              <i class="el-icon-star-on"></i>
+              <i @click="collectOrCancel(item)" :style="{ color: item.is_collected ? 'red':'#000' }" class="el-icon-star-on"></i>
               <i class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
@@ -55,6 +58,17 @@ export default {
     }
   },
   methods: {
+    collectOrCancel (item) {
+      this.$axios({
+        method: 'put',
+        url: `/user/images/${item.id}`,
+        data: {
+          collect: !item.is_collected // 取反
+        }
+      }).then(result => {
+        this.getMaterial()// 重新拉取数据
+      })
+    },
     changePage (newPage) { // 页码改变事件
       this.page.currentPage = newPage// 最新页码
       this.getMaterial()
@@ -108,6 +122,9 @@ export default {
       bottom: 0;
       font-size: 20px;
       height: 40px;
+      i{
+        cursor: pointer;
+      }
     }
   }
 }

@@ -2,8 +2,8 @@
   <div>
     <el-container>
       <!-- 左侧 -->
-      <el-aside>
-        <layout-aside class="abc"></layout-aside>
+      <el-aside class="abc">
+        <layout-aside></layout-aside>
       </el-aside>
 
       <!-- 右侧 -->
