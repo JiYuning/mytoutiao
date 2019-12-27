@@ -16,7 +16,7 @@
             </div>
             <el-row class="operate" align="middle" type="flex" justify="space-around">
               <i @click="collectOrCancel(item)" :style="{ color: item.is_collected ? 'red':'#000' }" class="el-icon-star-on"></i>
-              <i class="el-icon-delete-solid"></i>
+              <i @click="delMaterial(item.id)" class="el-icon-delete-solid"></i>
             </el-row>
           </el-card>
         </div>
@@ -58,7 +58,17 @@ export default {
     }
   },
   methods: {
-    collectOrCancel (item) {
+    delMaterial (id) { // 删除图片
+      this.$confirm('你确定要删除此图片吗').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/user/images/${id}`
+        }).then(result => {
+          this.getMaterial()// 重新拉取数据
+        })
+      })
+    },
+    collectOrCancel (item) { // 收藏或取消
       this.$axios({
         method: 'put',
         url: `/user/images/${item.id}`,
