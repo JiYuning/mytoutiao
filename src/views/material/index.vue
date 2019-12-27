@@ -17,9 +17,7 @@
             </el-row>
           </el-card>
         </div>
-        <el-row type="flex" justify="center">
-        <el-pagination :current-page="page.currentPage" :page-size="page.pageSize" background layout="prev, pager, next" :total="page.total"></el-pagination>
-        </el-row>
+
       </el-tab-pane>
       <el-tab-pane label="收藏图片" name="collect">
         <div class="img-list">
@@ -30,6 +28,14 @@
           </el-card>
         </div>
       </el-tab-pane>
+      <el-row type="flex" justify="center">
+        <el-pagination :page-size="page.pageSize"
+          :current-page="page.currentPage"
+          :pager-count="11"
+          layout="prev, pager, next"
+          :total="page.total"
+          @current-change="changePage"></el-pagination>
+        </el-row>
     </el-tabs>
   </el-card>
 </template>
@@ -40,6 +46,7 @@ export default {
     return {
       activeName: 'all', // 当前选中的标签，
       list: [],
+      loading: false, // 默认不打开进度条
       page: {
         currentPage: 1,
         pageSize: 10,
@@ -48,17 +55,25 @@ export default {
     }
   },
   methods: {
+    changePage (newPage) { // 页码改变事件
+      this.page.currentPage = newPage// 最新页码
+      this.getMaterial()
+    },
     changTab () {
+      this.page.currentPage = 1
       this.getMaterial()
     },
     getMaterial () {
       this.$axios({
         url: '/user/images',
         params: {
+          page: this.page.currentPage,
+          per_page: this.page.pageSize,
           collect: this.activeName === 'collect' // false是获取全部数据 true是获取收藏数据
         }
       }).then(result => {
         this.list = result.data.results // 获取当前选项的图片数据
+        this.page.total = result.data.total_count
       })
     }
   },
