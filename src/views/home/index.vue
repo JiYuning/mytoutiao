@@ -3,7 +3,7 @@
     <el-container>
       <!-- 左侧 -->
       <el-aside>
-        <layout-aside style="min-height:100vh;background-color:#323745"></layout-aside>
+        <layout-aside class="abc"></layout-aside>
       </el-aside>
 
       <!-- 右侧 -->
@@ -26,4 +26,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.abc{
+  min-height:100vh;
+  background-color:#323745
+}
 </style>
