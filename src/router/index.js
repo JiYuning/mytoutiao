@@ -18,11 +18,14 @@ const routes = [
       path: '',
       component: Home2
     }, {
-      path: '/home/comment',
+      path: '/home/comment', // 评论列表
       component: () => import('../views/comment')
     }, {
-      path: 'material',
+      path: 'material', // 素材列表
       component: () => import('../views/material')
+    }, {
+      path: 'articles', // 文章列表
+      component: () => import('../views/articles')
     }]
   }, {
     path: '/login',
