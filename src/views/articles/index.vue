@@ -8,7 +8,7 @@
     <!-- 选择状态 -->
     <el-form style="padding-left:50px">
       <el-form-item label="文章状态:">
-        <el-radio-group v-model="searchForm.status">
+        <el-radio-group v-model="searchForm.status" @change="changCondition">
           <el-radio :label="5">全部</el-radio>
           <el-radio :label="0">草稿</el-radio>
           <el-radio :label="1">待审核</el-radio>
@@ -19,7 +19,7 @@
 
       <!-- 选择频道 -->
       <el-form-item label="频道列表:">
-        <el-select placeholder="请选择频道" v-model="searchForm.channels_id">
+        <el-select placeholder="请选择频道" v-model="searchForm.channels_id" @change="changCondition">
           <!-- el-option  label是显示值   value是存储值 -->
           <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
         </el-select>
@@ -28,6 +28,8 @@
       <!-- 时间 -->
       <el-form-item label="时间选择:">
         <el-date-picker
+          @change="changCondition"
+          value-format="yyyy-MM-dd"
           v-model="searchForm.dateRange"
           type="daterange"
           range-separator="至"
@@ -64,6 +66,7 @@
 
 <script>
 // import { filter } from 'minimatch'
+
 export default {
   data () {
     return {
@@ -74,7 +77,7 @@ export default {
       },
       channels: [], // 接收频道数据,
       list: [],
-      defaultImg: require('../../assets/img/4.jpg')// 默认图片
+      defaultImg: require('../../assets/img/4.jpg') // 默认图片
     }
   },
   filters: {
@@ -108,6 +111,16 @@ export default {
     }
   },
   methods: {
+    changCondition () {
+      // 改变条件
+      let params = {
+        status: this.searchForm.status === 5 ? null : this.searchForm.status, // 因为5是自己定义的一个标识，全部应该什么都不传，直接传null
+        channel_id: this.searchForm.channels_id,
+        begin_pubdate: this.searchForm.dateRange.length ? this.searchForm.dateRange[0] : null, // 开始时间
+        end_pubdate: this.searchForm.dateRange.length > 1 ? this.searchForm.dateRange[1] : null // 截止时间
+      }
+      this.getArticles(params)
+    },
     // 获取所有的频道
     getChannels () {
       this.$axios({
@@ -116,17 +129,18 @@ export default {
         this.channels = result.data.channels
       })
     },
-    getArticles () {
+    getArticles (params) {
       this.$axios({
-        url: '/articles'
+        url: '/articles',
+        params
       }).then(result => {
-        this.list = result.data.results// 获取文章列表数据
+        this.list = result.data.results // 获取文章列表数据
       })
     }
   },
   created () {
     this.getChannels() // 获取文章数据
-    this.getArticles()// 获取文章列表数据
+    this.getArticles() // 获取文章列表数据
   }
 }
 </script>
@@ -143,38 +157,38 @@ export default {
     padding: 20px 0;
     border-bottom: 1px solid #f2f3f5;
     .left {
-        display: flex;
+      display: flex;
       img {
         width: 150px;
         height: 150px;
         border-radius: 5px;
       }
-      .info{
-          display: flex;
-          flex-direction: column;
-          margin-left: 20px;
-          height:150px;
-          justify-content: space-around;
-          .date{
-              color: #999;
-              font-size: 12px;
-          }
-          .tag{
-              text-align: center;
-              width: 70px;
-              padding: 0 0;
-          }
+      .info {
+        display: flex;
+        flex-direction: column;
+        margin-left: 20px;
+        height: 150px;
+        justify-content: space-around;
+        .date {
+          color: #999;
+          font-size: 12px;
+        }
+        .tag {
+          text-align: center;
+          width: 70px;
+          padding: 0 0;
+        }
       }
     }
-    .right{
-        span{
+    .right {
+      span {
         font-size: 14px;
         margin-right: 10px;
         cursor: pointer;
-        }
-        span:hover{
-            color: red;
-        }
+      }
+      span:hover {
+        color: red;
+      }
     }
   }
 }
